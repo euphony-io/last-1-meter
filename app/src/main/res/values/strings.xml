@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Last1Meter</string>
 </resources>
+
+<!--strings.xml은 특정 문자열에 대한 "별명"을 지정하는 공간 by 채승운-->
