@@ -14,6 +14,9 @@ import com.soundary.last1meter.ui.theme.Last1MeterTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        // activity가 갖는 생명주기함수, acivity가 실행되자마자 호출되는 함수
+        // 번들(안드)이란? https://www.crocus.co.kr/1560
+        // 안드로이드에서, activity들은 데이터를 주고 받을 때 Bundle 속성의 클래스를 사용한다. by 채승운
         super.onCreate(savedInstanceState)
         setContent {
             Last1MeterTheme {
@@ -22,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    Greeting("world!")
                 }
             }
         }
@@ -38,6 +41,6 @@ fun Greeting(name: String) {
 @Composable
 fun DefaultPreview() {
     Last1MeterTheme {
-        Greeting("Android")
+        Greeting("Euphony")
     }
 }

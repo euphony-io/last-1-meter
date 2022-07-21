@@ -5,3 +5,5 @@
         <item name="android:statusBarColor">@color/purple_700</item>
     </style>
 </resources>
+
+<!--themes.xml 파일은 안드로이드의 테마(앱 UI의 커스터마이징) 속성을 담은 변수들을 보관하는 공간이다. by 채승운-->

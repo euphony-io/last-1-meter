@@ -3,3 +3,5 @@
     <background android:drawable="@drawable/ic_launcher_background" />
     <foreground android:drawable="@drawable/ic_launcher_foreground" />
 </adaptive-icon>
+
+<!--둥그런 형태의 앱 아이콘에 대응하기 위한 리소스이다. by 채승운-->
