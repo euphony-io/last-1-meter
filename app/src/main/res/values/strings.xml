@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Last1Meter</string>
+    <string name="show_less">Show less</string>
+    <string name="show_more">Show more</string>
+    <string name="FirstGreet">당신의 빠른 거래를 위한, Last-1-meter입니다.</string>
 </resources>
 
 <!--strings.xml은 특정 문자열에 대한 "별명"을 지정하는 공간 by 채승운-->
