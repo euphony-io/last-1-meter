@@ -42,6 +42,7 @@ class MainActivity : ComponentActivity() {
                         Row {
                             StartButton()
                             EndButton()
+
                         }
                     }
                 }
@@ -50,15 +51,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true) // 미리보기 함수, 생성된 UI를 미리 표시해줌.
 @Composable
 fun DefaultPreview() {
-    Last1MeterTheme {
-        Column {
-            Greeting("채승운")
-            Row {
-                StartButton()
-                EndButton()
+    Last1MeterTheme { // 테마 깔기
+        Column { // 열 규칙으로
+            Greeting("채승운") // 인사 메시지
+            Row { // 행 규칙으로
+                StartButton() // 거래자 찾기 버튼
+                EndButton() // 그 오른쪽에 거래 종료 버튼
             }
         }
     }
@@ -66,36 +67,36 @@ fun DefaultPreview() {
 
 @Composable
 fun HomeImage() {
-    Icon(Icons.Rounded.Home, contentDescription = "")
+    Icon(Icons.Rounded.Home, contentDescription = "") // 집 아이콘
 }
 
 @Composable
 fun HearImage() {
-    Icon(Icons.Rounded.Hearing, contentDescription = "")
+    Icon(Icons.Rounded.Hearing, contentDescription = "") // 귀 아이콘
 }
 
 @Composable
 fun CarrotImage() {
         val image: Painter = painterResource(id = R.drawable.mainimage)
-        Image(painter = image,contentDescription = "")
+        Image(painter = image,contentDescription = "") // 당근이 이미지 삽입
 }
 
 @Composable
 fun Greeting(name: String) {
-    Surface(
+    Surface( // 색깔 지정
         color = androidx.compose.ui.graphics.Color.Unspecified
-    ) {
+    ) { // 행의 규칙으로
         Row(verticalAlignment = Alignment.CenterVertically) {
-            CarrotImage()
-            Column {
-                Text(
+            CarrotImage() // 이미지 삽입
+            Column { // 오른쪽에 텍스트들이 삽입되는데 이것들은 열의 규칙으로
+                Text( // 텍스트의 내용 및 크기, 특성 등을 지정
                     text = "Welcome to last-1-meter!",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(1.dp),
                     fontSize = 30.sp
                 )
-                Text(
+                Text( // 텍스트의 내용 및 크기, 특성 등을 지정
                     text = "${name}님 반갑습니다! 거래자를 찾으시나요?!",
                     modifier = Modifier
                         .fillMaxWidth()
@@ -109,25 +110,6 @@ fun Greeting(name: String) {
 
 @Composable
 fun StartButton(){
-   /* val context = LocalContext.current
-    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceAround) {
-        content = {
-        Button(
-            onClick = { Toast.makeText(context, "Start Finding..", Toast.LENGTH_LONG).show()},
-            content = {Text(text="show test")},
-            //enabled = false,
-            //colors = ButtonDefaults.buttonColors(
-             //   disabledBackgroundColor = Blue,
-             //   disabledContentColor = White
-            //),
-
-           modifier = Modifier
-               .width(210.dp)
-               .height(70.dp)
-        ) {
-            HearImage()
-            Text(text = "거래자 찾기")
-        }*/
 
     val context = LocalContext.current
     Column(
@@ -169,7 +151,7 @@ fun EndButton(){
                         Toast.LENGTH_SHORT
                     ).show()
                 }, content = {
-                    HearImage()
+                    HomeImage()
                     Text(text = "거래 종료")
                 },
                     modifier = Modifier.width(200.dp).height(70.dp)
