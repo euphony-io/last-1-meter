@@ -1,9 +1,5 @@
 package com.soundary.last1meter
 
-import android.app.Activity
-import android.content.ComponentName
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -14,7 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Hearing
 import androidx.compose.material.icons.rounded.Home
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -23,10 +19,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.finishAffinity
-import androidx.core.content.ContextCompat.startActivity
 import com.soundary.last1meter.ui.theme.Last1MeterTheme
+import euphony.lib.receiver.AcousticSensor
+import euphony.lib.receiver.EuRxManager
+import euphony.lib.transmitter.EuTxManager
 
 
 class MainActivity : ComponentActivity() {
@@ -72,23 +68,6 @@ fun DefaultPreview() {
 
 @Composable
 fun HomeImage() {
-   /* val mRxManager = EuRxManager()
-    mRxManager.setAcousticSensor(object : AcousticSensor() {
-        fun notify(letters: String?) {
-            //when data is received
-        }
-    })
-
-    mRxManager.listen() //Listening Start
-
-// if you want to finish listening, call the finish();
-// mRxManager.finish();
-
-    val mTxManager = EuTxManager()
-    mTxManager.setCode("Hello, Euphony") // To generate acoustic data "Hello, Euphony"
-
-    mTxManager.play(-1) // generate sound infinite.
-*/
     Icon(Icons.Rounded.Home, contentDescription = "") // 집 아이콘
 }
 
@@ -160,6 +139,22 @@ fun StartButton(){
     )
 }
 
+fun transmitter(){
+    val mTxManager = EuTxManager()
+    mTxManager.setCode("Hello, Euphony") // To generate acoustic data "Hello, Euphony"
+    mTxManager.process(-1) // generate sound infinite.
+}
+
+fun receiver(){
+    val mRxManager = EuRxManager()
+    mRxManager.acousticSensor = AcousticSensor {
+        //when data is received
+    }
+    mRxManager.listen() //Listening Start
+// if you want to finish listening, call the finish();
+// mRxManager.finish();
+}
+
 @Composable
 fun EndButton(){
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceAround) {
@@ -174,7 +169,7 @@ fun EndButton(){
                         "거래를 종료합니다..",
                         Toast.LENGTH_SHORT
                     ).show()
-
+                    System.exit(0)
                 }, content = {
                     HomeImage()
                     Text(text = "거래 종료")

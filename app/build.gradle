@@ -47,6 +47,7 @@ android {
 }
 
 dependencies {
+    implementation 'co.jbear.lib:euphony:0.7.1.6'
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha01"
     implementation "androidx.activity:activity-compose:1.3.0-alpha02"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
