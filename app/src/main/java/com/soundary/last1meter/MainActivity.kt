@@ -1,16 +1,33 @@
 package com.soundary.last1meter
 
+import android.app.Activity
+import android.content.ComponentName
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Hearing
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.finishAffinity
+import androidx.core.content.ContextCompat.startActivity
 import com.soundary.last1meter.ui.theme.Last1MeterTheme
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,22 +42,151 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("world!")
+                    Column {
+                        Greeting("채승운")
+                        Row {
+                            StartButton()
+                            EndButton()
+
+                        }
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
+@Preview(showBackground = true) // 미리보기 함수, 생성된 UI를 미리 표시해줌.
 @Composable
 fun DefaultPreview() {
-    Last1MeterTheme {
-        Greeting("Euphony")
+    Last1MeterTheme { // 테마 깔기
+        Column { // 열 규칙으로
+            Greeting("채승운") // 인사 메시지
+            Row { // 행 규칙으로
+                StartButton() // 거래자 찾기 버튼
+                EndButton() // 그 오른쪽에 거래 종료 버튼
+            }
+        }
+    }
+}
+
+@Composable
+fun HomeImage() {
+   /* val mRxManager = EuRxManager()
+    mRxManager.setAcousticSensor(object : AcousticSensor() {
+        fun notify(letters: String?) {
+            //when data is received
+        }
+    })
+
+    mRxManager.listen() //Listening Start
+
+// if you want to finish listening, call the finish();
+// mRxManager.finish();
+
+    val mTxManager = EuTxManager()
+    mTxManager.setCode("Hello, Euphony") // To generate acoustic data "Hello, Euphony"
+
+    mTxManager.play(-1) // generate sound infinite.
+*/
+    Icon(Icons.Rounded.Home, contentDescription = "") // 집 아이콘
+}
+
+@Composable
+fun HearImage() {
+    Icon(Icons.Rounded.Hearing, contentDescription = "") // 귀 아이콘
+}
+
+@Composable
+fun CarrotImage() {
+        val image: Painter = painterResource(id = R.drawable.mainimage)
+        Image(painter = image,contentDescription = "") // 당근이 이미지 삽입
+}
+
+@Composable
+fun Greeting(name: String) {
+    Surface( // 색깔 지정
+        color = androidx.compose.ui.graphics.Color.Unspecified
+    ) { // 행의 규칙으로
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            CarrotImage() // 이미지 삽입
+            Column { // 오른쪽에 텍스트들이 삽입되는데 이것들은 열의 규칙으로
+                Text( // 텍스트의 내용 및 크기, 특성 등을 지정
+                    text = "Welcome to last-1-meter!",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(1.dp),
+                    fontSize = 30.sp
+                )
+                Text( // 텍스트의 내용 및 크기, 특성 등을 지정
+                    text = "${name}님 반갑습니다! 거래자를 찾으시나요?!",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(1.dp),
+                    fontSize = 16.sp
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun StartButton(){
+
+    val context = LocalContext.current
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceAround,
+        content = {
+            Button(onClick = {
+                Toast.makeText(
+                    context,
+                    "거래자 탐색을 시작합니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }, content = {
+                HearImage()
+                Text(text = "거래자 찾기")
+
+            },
+                modifier = Modifier
+                    .width(200.dp)
+                    .height(70.dp)
+            )
+        }, modifier = Modifier
+            .width(200.dp)
+            .height(70.dp)
+
+    )
+}
+
+@Composable
+fun EndButton(){
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceAround) {
+        val context = LocalContext.current
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceAround,
+            content = {
+                Button(onClick = {
+                    Toast.makeText(
+                        context,
+                        "거래를 종료합니다..",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }, content = {
+                    HomeImage()
+                    Text(text = "거래 종료")
+                },
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(70.dp)
+                )
+            }, modifier = Modifier
+                .width(200.dp)
+                .height(70.dp)
+                .offset(x = 10.dp)
+        )
     }
 }

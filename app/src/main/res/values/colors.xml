@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="smallBlue">#FF6DF6EA</color>
+    <color name="Orange">#FFFF7F00</color>
 </resources>
 
 <!--values 파일에는 색상, 문자열, 테마 등을 "변수"로 담는다.-->
