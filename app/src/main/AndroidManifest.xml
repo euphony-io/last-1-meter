@@ -7,6 +7,8 @@
 <!-- icon은 앱의 아이콘 파일이다. label은 앱의 이름이다. roundIcon은 아이콘의 모양을 유연하게(둥그렇게)만들어둔 속성 파일을 가져온다.-->
 <!-- supportRtl은 아랍어같은(오_>왼읽기) 언어를 지원하는지 여부를 물어본다.-->
 <!-- theme는 앱의 테마(스타일의 기본값이 모여있는 집합?)값을 담고 있다. targetApi는 SDK 버전이다. by 채승운-->
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
