@@ -168,7 +168,7 @@ fun Greeting(name: String) {
 
 fun transmitter(){
     val mTxManager = EuTxManager()
-    mTxManager.setCode("Hello, Euphony") // To generate acoustic data "Hello, Euphony"
+    mTxManager.euInitTransmit("Hello, Euphony") // To generate acoustic data "Hello, Euphony"
     mTxManager.process(-1) // generate sound infinite.
 }
 
