@@ -12,7 +12,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.ExitToApp
+import androidx.compose.material.icons.rounded.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -73,19 +74,15 @@ class MainActivity : ComponentActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // activity가 갖는 생명주기함수, acivity가 실행되자마자 호출되는 함수
-        // 번들(안드)이란? https://www.crocus.co.kr/1560
-        // 안드로이드에서, activity들은 데이터를 주고 받을 때 Bundle 속성의 클래스를 사용한다. by 채승운
         super.onCreate(savedInstanceState)
         setContent {
             Last1MeterTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
                     Column{
-                        Greeting("Euphony!")
+                        Greeting("채승운")
                         checkPermission()
                         MyContent()
                     }
@@ -97,7 +94,7 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun CreateDialog(onClick: () -> Unit) {
+fun CreateDialog(onClick: () -> Unit) { // 종료 dialog
     AlertDialog(
         onDismissRequest = {
         },
@@ -130,7 +127,7 @@ fun CreateDialog(onClick: () -> Unit) {
 }
 
 @Composable
-fun CreateButton(icon : ImageVector,text:String, onClick: ()-> Unit){
+fun CreateButton(icon : ImageVector,text:String, onClick: ()-> Unit){ // 버튼 UI
     Button(
         onClick = onClick,
         modifier = Modifier
@@ -144,7 +141,7 @@ fun CreateButton(icon : ImageVector,text:String, onClick: ()-> Unit){
 }
 
 
-private fun CreateToast(context: Context, text : String){
+private fun CreateToast(context: Context, text : String){ // Toast 형태 메시지 출력
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 }
 
@@ -152,7 +149,13 @@ private fun CreateToast(context: Context, text : String){
 @Composable
 fun MyContent() {
     val mTxManager = EuTxManager()
-    val mRxManager = EuRxManager()
+    val mRxManager = EuRxManager() // 스피커, 리스너 객체 생성
+    mRxManager.acousticSensor = AcousticSensor {
+        //when data is received
+        fun notify(letters: String?){ // 인터페이스 설정
+            Log.d(letters, "hello")
+        }
+    }
     val context = LocalContext.current
 
     Row(horizontalArrangement = Arrangement.Center) {
@@ -160,8 +163,8 @@ fun MyContent() {
         val exitClickable = remember { mutableStateOf(false) }
 
         CreateButton(Icons.Rounded.Home, text = "거래자 찾기") {
-            transmitter(mTxManager, mRxManager) // test
-            receiver(mRxManager, mTxManager) // test
+            transmitter(mTxManager) // 전송 시작
+            receiver(mRxManager) // 수신 시작
             CreateToast(context, "거래자 탐색을 시작합니다")
         }
 
@@ -172,18 +175,16 @@ fun MyContent() {
         }
 
         if (exitClickable.value) {
-            CreateDialog() {
+            CreateDialog() { // 종료 dialog 생성
                 exitClickable.value = false
             }
         }
     }
-        CreateDis(10)
-
-
+        CreateDis(3) // 거리 출력, 인자는 처리 함수가 따로 존재할 예정이었음.
 }
 
 @Composable
-fun CreateDis(dis : Int){
+fun CreateDis(dis : Int){ // 거리 출력 함수
     Surface( // 색깔 지정
         color = androidx.compose.ui.graphics.Color.Unspecified
     ) {
@@ -212,13 +213,13 @@ fun CreateDis(dis : Int){
 }
 
 @Composable
-fun CarrotImage() {
+fun CarrotImage() { // 이미지
     val image: Painter = painterResource(id = R.drawable.mainimage)
     Image(painter = image,contentDescription = "") // 당근이 이미지 삽입
 }
 
 @Composable
-fun Greeting(name: String) {
+fun Greeting(name: String) { // 초기 메시지
     Surface( // 색깔 지정
         color = androidx.compose.ui.graphics.Color.Unspecified
     ) { // 행의 규칙으로
@@ -244,25 +245,28 @@ fun Greeting(name: String) {
     }
 }
 
-fun transmitter(mTxManager: EuTxManager, mRxManager: EuRxManager) {
-    val mTxManager = EuTxManager()
+fun transmitter(mTxManager: EuTxManager) { // 전송
     mTxManager.euInitTransmit("Hello, Euphony") // To generate acoustic data "Hello, Euphony"
     mTxManager.process(-1) // generate sound infinite.
 }
 
-fun receiver(mRxManager: EuRxManager, mTxManager: EuTxManager) {
-    val mRxManager = EuRxManager()
-    mRxManager.acousticSensor = AcousticSensor {
-        //when data is received
-    }
+fun receiver(mRxManager: EuRxManager) { // 수신
     mRxManager.listen() //Listening Start
+    // mRxManager.finish()
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     Last1MeterTheme {
-        Greeting(name = "Euphony")
-        MyContent()
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            Column{
+                Greeting("Euphony!")
+                MyContent()
+            }
+        }
     }
 }
